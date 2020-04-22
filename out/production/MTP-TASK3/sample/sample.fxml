@@ -35,7 +35,7 @@
                         <ColorAdjust />
                      </effect>
                   </TableView>
-                  <Button fx:id="chooseFileButton" layoutX="165.0" layoutY="453.0" mnemonicParsing="false" onAction="#chooseFileAction" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #3B969B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 50px;" text="Choose file" />
+                  <Button fx:id="chooseFolderButton" layoutX="165.0" layoutY="453.0" mnemonicParsing="false" onAction="#chooseFolderAction" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #3B969B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 50px;" text="Choose folder" />
                   <Text fill="WHITE" layoutX="197.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 1em; -fx-font-family: Quicksand; -fx-font-weight: bold; -fx-fill: #3B969B;" text="Available attributes" />
                   <Button fx:id="extractButton" alignment="CENTER" layoutX="574.0" layoutY="130.0" mnemonicParsing="false" onAction="#extractButtonAction" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #3B969B; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 50px;" text="Extract" textAlignment="CENTER" />
                   <Button fx:id="pauseButton" alignment="CENTER" layoutX="574.0" layoutY="222.0" mnemonicParsing="false" onAction="#pauseButtonAction" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #FE9992; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 50px;" text="Pause" textAlignment="CENTER" />
