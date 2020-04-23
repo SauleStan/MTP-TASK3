@@ -39,16 +39,24 @@ public class Controller implements Initializable {
     @FXML private AnchorPane anchorid;
     @FXML private TableView<sample.Attribute> attributesTable;
     @FXML private TableColumn<sample.Attribute, String> attributesColumn;
+    @FXML private TableView<sample.Attribute> selectedAttributesTable;
+    @FXML private TableColumn<sample.Attribute, String> selectedAttributesColumn;
     @FXML private TextArea availableAttributesTextArea;
     @FXML private Button chooseFolderButton;
     @FXML private Button extractButton;
     @FXML private Button pauseButton;
     @FXML private Button resumeButton;
     @FXML private Button cancelButton;
+    @FXML private Button buttonRight;
+    @FXML private Button buttonLeft;
     @FXML private ProgressBar progressBar;
 
     // Observable List for sample.attributes for tableview
     private ObservableList<sample.Attribute> attrObservableList = FXCollections.observableArrayList();
+
+    // List of selected attributes
+    // Gotta keep this as sample.Attribute to populate the tableview
+    private ObservableList<sample.Attribute> selectedAttributesArray = FXCollections.observableArrayList();
 
     /*==========================DIRECTORY SELECTION==========================*/
     public void chooseFolderAction(javafx.event.ActionEvent event) throws IOException {
@@ -104,11 +112,7 @@ public class Controller implements Initializable {
     }
 
     public void extractButtonAction(javafx.event.ActionEvent event) {
-        // Array of selected attributes TODO: Figure out whether you gon use weka or sample attributes for this array
-        ArrayList<sample.Attribute> selectedAttributes = new ArrayList<sample.Attribute>();
-
-        // Makes a new weka attribute of selected sample.attribute :I
-        Attribute selectedAttribute = new Attribute(attributesTable.getSelectionModel().getSelectedItem().getAttributeName());
+        // TODO: figure out where to store info on what folder is selected
         // TODO: get data from the selected folder only by using the selected attributes (Hint: getData() in ArffReader has everything u need)
         // TODO: extract data into separate arff file
     }
@@ -125,11 +129,24 @@ public class Controller implements Initializable {
 
     }
 
+    public void buttonRightAction(javafx.event.ActionEvent event) {
+        // Makes a new weka attribute of selected sample.attribute :I
+        sample.Attribute selectedAttribute = attributesTable.getSelectionModel().getSelectedItem();
+        selectedAttributesArray.add(selectedAttribute);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Populates the table
+        // Preps the available attributes table
         attributesColumn.setCellValueFactory(cellData -> cellData.getValue().attributeNameProperty());
+        // Actually puts the attrObservableList into the table, SAULE. istg. smh. don't forget this again.
         attributesTable.setItems(attrObservableList);
         //attributesColumn.setCellValueFactory(new PropertyValueFactory<sample.Attribute, String>("attributeName"));
+
+        // Everything the same as above, but for the selected attributes
+        selectedAttributesColumn.setCellValueFactory(cellData -> cellData.getValue().attributeNameProperty());
+        selectedAttributesTable.setItems(selectedAttributesArray);
+
     }
 }
