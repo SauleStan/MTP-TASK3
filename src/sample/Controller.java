@@ -2,12 +2,14 @@ package sample;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
@@ -31,6 +33,7 @@ import javafx.stage.Stage;
 
 import org.w3c.dom.Attr;
 import weka.core.Attribute;
+import weka.core.Instance;
 
 public class Controller implements Initializable {
 
@@ -51,12 +54,16 @@ public class Controller implements Initializable {
     @FXML private Button buttonLeft;
     @FXML private ProgressBar progressBar;
 
-    // Observable List for sample.attributes for tableview
+    // Observable List for sample.attributes for attribute tableview
     private ObservableList<sample.Attribute> attrObservableList = FXCollections.observableArrayList();
 
     // List of selected attributes
-    // Gotta keep this as sample.Attribute to populate the tableview
+    // Gotta keep this as sample.Attribute to populate the selected attributes tableview
     private ObservableList<sample.Attribute> selectedAttributesArray = FXCollections.observableArrayList();
+
+    // String of absolute path to the selected folder of arff files
+    // 'Tis here cause during extraction we need the same path
+    String selectedFolder;
 
     /*==========================DIRECTORY SELECTION==========================*/
     public void chooseFolderAction(javafx.event.ActionEvent event) throws IOException {
@@ -68,11 +75,11 @@ public class Controller implements Initializable {
         if(selectedDirectory != null) {
             ArffReader arffReader = new ArffReader();
 
-            String path = selectedDirectory.getAbsolutePath();
-            System.out.println("Path: " + path);
+            selectedFolder = selectedDirectory.getAbsolutePath();
+            System.out.println("Path: " + selectedFolder);
 
             // Reads through files in the chosen directory
-            File folder = new File(path);
+            File folder = new File(selectedFolder);
             File[] listOfFiles = folder.listFiles();
 
             // Takes the first file and reads the attributes CAUSE THEY ALL ARE THE SAME
@@ -111,10 +118,25 @@ public class Controller implements Initializable {
         }
     }
 
-    public void extractButtonAction(javafx.event.ActionEvent event) {
-        // TODO: figure out where to store info on what folder is selected
-        // TODO: get data from the selected folder only by using the selected attributes (Hint: getData() in ArffReader has everything u need)
-        // TODO: extract data into separate arff file
+    public void extractButtonAction(javafx.event.ActionEvent event) throws IOException {
+        // Array list of selected attributes
+        ArrayList<Attribute> atts = new ArrayList<Attribute>();
+
+        // List of instances taken from the files in the selected folder
+        List<Instance> instances = new ArrayList<Instance>();
+
+        // TODO: figure out how to generate file names
+        String fileName = "newArffFile.arff";
+
+        // TODO: get data from the selected folder only by using the selected attributes (Hint: getData() in ArffReader has everything u need. probs.)
+
+        // Creates file with the data
+        File file = new File(selectedFolder + "\\" + fileName);
+
+        FileWriter writer = new FileWriter(file);
+        writer.write("");//TODO: figure out how to send the data in one big chunk (AKA in format of data from weka library)
+        writer.close();
+
     }
 
     public void pauseButtonAction(javafx.event.ActionEvent event) {

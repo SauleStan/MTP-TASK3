@@ -11,20 +11,23 @@ import java.util.ArrayList;
 
 public class ArffReader {
 
-    public void readArff() throws IOException {
-        String filename = "arff\\fixed_1 Dziaugsmas_01.arff";
+    public void readArff(String folderName, ArrayList<Attribute> selectedAttributes) throws IOException {
+
 
         // Read all the instances in the file(ARFF)
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        BufferedReader reader = new BufferedReader(new FileReader(folderName));
         ArffLoader.ArffReader arff = new ArffLoader.ArffReader(reader);
         Instances data = arff.getData();
 
         // Make the last attribute be the class
         data.setClassIndex(data.numAttributes() - 1);
 
+        // TODO: figure out how to make proper attributes from the selected ones
+        // TODO: problem. how do you know attribute type once you turn it into sample.Attribute? (Save type info in the class?)
 
-        // Print data
-        System.out.println(data);
+
+        // Return data
+        // TODO: return some sort of data for insertion in file?
 
     }
 
