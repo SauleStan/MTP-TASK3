@@ -61,9 +61,12 @@ public class Controller implements Initializable {
     // Gotta keep this as sample.Attribute to populate the selected attributes tableview
     private ObservableList<sample.Attribute> selectedAttributesArray = FXCollections.observableArrayList();
 
+    // Relation name
+    private String relationName;
+
     // String of absolute path to the selected folder of arff files
     // 'Tis here cause during extraction we need the same path
-    String selectedFolder;
+    private String selectedFolder;
 
     /*==========================DIRECTORY SELECTION==========================*/
     public void chooseFolderAction(javafx.event.ActionEvent event) throws IOException {
@@ -97,7 +100,7 @@ public class Controller implements Initializable {
                 // Cause otherwise it doesn't work with tableview
                 for(Attribute a: attrArray){
                     System.out.println(a);
-                    attrObservableList.add(new sample.Attribute(a.name()));
+                    attrObservableList.add(new sample.Attribute(a));
                 }
 
                 // Prints the attributes observable list to console TODO:delete this probably, idc
@@ -105,14 +108,8 @@ public class Controller implements Initializable {
                 for(int x=0; x<attrObservableList.size(); x++) {
                     System.out.println(attrObservableList.get(x).getAttributeName());
                 }
+                relationName = arffReader.getRelation(listOfFiles[0].getAbsolutePath());
             }
-
-                for (int i = 0; i < listOfFiles.length; i++) {
-                    if (listOfFiles[i].isFile()) {
-                        // TODO: get only the data? DO you need to get it now or jsut parse thourgh agian?
-                        // TODO:sleep. idc about grammar
-                    }
-                }
 
 
         }
@@ -123,18 +120,62 @@ public class Controller implements Initializable {
         ArrayList<Attribute> atts = new ArrayList<Attribute>();
 
         // List of instances taken from the files in the selected folder
-        List<Instance> instances = new ArrayList<Instance>();
+        List<String> instances = new ArrayList<String>();
 
         // TODO: figure out how to generate file names
         String fileName = "newArffFile.arff";
 
-        // TODO: get data from the selected folder only by using the selected attributes (Hint: getData() in ArffReader has everything u need. probs.)
+        String folderName = "C:\\Users\\Saule\\Desktop\\4th semester\\Multithreaded\\MTP-TASK3-master\\generatedFiles";
 
-        // Creates file with the data
-        File file = new File(selectedFolder + "\\" + fileName);
+        ArffReader arffReader = new ArffReader();
 
-        FileWriter writer = new FileWriter(file);
-        writer.write("");//TODO: figure out how to send the data in one big chunk (AKA in format of data from weka library)
+        // Reads through files in the chosen directory
+        File folder = new File(selectedFolder);
+        File[] listOfFiles = folder.listFiles();
+
+        // Creates file where extracted data will be written
+        File fileToWrite = new File( folderName + "\\" + fileName);
+
+        // Prepares writer to write into the output file
+        FileWriter writer = new FileWriter(fileToWrite);
+
+        // Writes the relation and attributes into the file
+        writer.write("@relation " + relationName +"\n");
+        writer.write("\n");
+        for(sample.Attribute attr: selectedAttributesArray){
+            if (attr.getWekaAttr().isNumeric())
+                writer.write("@attribute " + attr.getAttributeName() + " numeric\n");
+            if(attr.getWekaAttr().isNominal())
+                writer.write("@attribute " + attr.getAttributeName() + " nominal\n");
+            if(attr.getWekaAttr().isString())
+                writer.write("@attribute " + attr.getAttributeName() + " string\n");
+            if(attr.getWekaAttr().isDate())
+                writer.write("@attribute " + attr.getAttributeName() + " date\n");
+            if(attr.getWekaAttr().isRelationValued())
+                writer.write("@attribute " + attr.getAttributeName() + " relational\n");
+        }
+        writer.write("\n");
+        writer.write("@data" + "\n");
+        writer.write("\n");
+
+        // Extracts the list of instances from the files in selected folder
+        for(File file: listOfFiles){
+            if(file.isFile()){
+                instances = arffReader.getData(file, selectedAttributesArray);
+
+                // Writes the extracted list of values into the file
+                for(int i = 0; i < instances.size(); i++) {
+                    if(i>0)
+                        writer.write( ",");
+                    writer.write(instances.get(i));
+                }
+
+                writer.write("\n");
+
+            }
+        }
+
+        // Closes the writer to file
         writer.close();
 
     }
