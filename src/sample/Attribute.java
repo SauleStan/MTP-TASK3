@@ -2,16 +2,33 @@ package sample;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import weka.core.Instances;
 
 public class Attribute {
     private SimpleStringProperty attributeName;
+    private int attrType;
+    private weka.core.Attribute wekaAttr;
 
-    public Attribute(){
-        this(null);
-    };
+    public Attribute(weka.core.Attribute wekaAttribute) {
+        this.wekaAttr = wekaAttribute;
+        this.attributeName = new SimpleStringProperty(wekaAttribute.name());
+        this.attrType = wekaAttribute.type();
+    }
 
-    public Attribute(String attributeName) {
-        this.attributeName = new SimpleStringProperty(attributeName);
+    public weka.core.Attribute getWekaAttr() {
+        return wekaAttr;
+    }
+
+    public void setWekaAttr(weka.core.Attribute wekaAttr) {
+        this.wekaAttr = wekaAttr;
+    }
+
+    public int getAttrType() {
+        return attrType;
+    }
+
+    public void setAttrType(int attrType) {
+        this.attrType = attrType;
     }
 
     public String getAttributeName() {
