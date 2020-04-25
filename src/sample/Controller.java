@@ -238,6 +238,11 @@ public class Controller implements Initializable{
         selectedAttributesArray.add(selectedAttribute);
     }
 
+    public void buttonLeftAction(javafx.event.ActionEvent event) {
+        sample.Attribute selectedAttribute = selectedAttributesTable.getSelectionModel().getSelectedItem();
+        selectedAttributesArray.remove(selectedAttribute);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Preps the available attributes table
