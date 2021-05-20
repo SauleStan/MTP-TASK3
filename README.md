@@ -2,7 +2,7 @@
 ☕ Java Multi-threading 3rd task
 
 ## Purpose
-To extract selected attributes from all files in a selected forlder and generate a new arff file with them.
+To extract selected attributes from all files in a selected folder and generate a new arff file with them.
 
 ## Details
 Application is multithreaded, application doesn't freeze during extraction, process can be paused and resumed.
