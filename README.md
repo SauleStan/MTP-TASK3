@@ -8,7 +8,7 @@ To extract selected attributes from all files in a selected forlder and generate
 Application is multithreaded, application doesn't freeze during extraction, process can be paused and resumed.
 
 ## Preview
-<img src="/img/start_view.png" alt="init view" width="350"/>
+<img src="/img/start_view.png" alt="init view" width="600"/>
 
 Loaded attributes:
 
