@@ -12,16 +12,16 @@ Application is multithreaded, application doesn't freeze during extraction, proc
 
 Loaded attributes:
 
-<img src="/img/loaded_attr.png" alt="loaded attributes" width="350"/>
+<img src="/img/loaded_attr.png" alt="loaded attributes" width="600"/>
 
 Selected attributes:
 
-<img src="/img/select_attr.png" alt="selected attributes" width="350"/>
+<img src="/img/select_attr.png" alt="selected attributes" width="600"/>
 
 Confirmation:
 
-<img src="/img/confirm.png" alt="confirmation window" width="350"/>
+<img src="/img/confirm.png" alt="confirmation window" width="600"/>
 
 Generated file preview:
 
-<img src="/img/generated.png" alt="generated file" width="350"/>
+<img src="/img/generated.png" alt="generated file" width="600"/>
